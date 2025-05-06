@@ -47,6 +47,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           context: Security Testing
+          sha: ${{ github.sha }}
  
   SCA:
     needs: SAST
