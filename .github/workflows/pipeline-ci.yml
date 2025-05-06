@@ -44,7 +44,7 @@ jobs:
         uses: myrotvorets/set-commit-status-action@master
         if: always()
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           status: ${{ job.status }}
           context: Security Testing
           sha: ${{ github.sha }}
