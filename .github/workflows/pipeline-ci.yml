@@ -52,7 +52,13 @@ jobs:
         with:
           project: 'ms-aumento-voto'
           path: '.'
-          format: 'HTML'          
+          format: 'HTML'   
+          
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
                     
   Docker-build:
     name: Build Docker Image
