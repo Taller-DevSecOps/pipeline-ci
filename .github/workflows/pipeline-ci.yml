@@ -9,7 +9,22 @@ permissions:
   actions: read
   contents: read
 jobs:
-  
+  BUILD:
+    runs-on: ubuntu-latest
+    name: Build ms
+    steps:   
+      - name: Git Clone
+        uses: actions/checkout@v4
+      
+      - name: Set Up JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Build
+        run: |
+          mvn clean compile
   SAST:
     runs-on: ubuntu-latest
     name: Static Application Security Testing
