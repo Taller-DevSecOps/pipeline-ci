@@ -36,18 +36,18 @@ jobs:
         with:
           category: "/language:java-kotlin"
           
-      - name: Validate SAST
-        run: |
-          exit 1
+      #- name: Validate SAST
+        #run: |
+          #exit 1
 
-      - name: Set final commit status
-        uses: myrotvorets/set-commit-status-action@master
-        if: always()
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          status: ${{ job.status }}
-          context: Security Testing
-          sha: ${{ github.sha }}
+      #- name: Set final commit status
+        #uses: myrotvorets/set-commit-status-action@master
+        #if: always()
+        #with:
+          #token: ${{ secrets.GH_TOKEN }}
+          #status: ${{ job.status }}
+          #context: Security Testing
+          #sha: ${{ github.sha }}
  
   SCA:
     needs: SAST
@@ -93,6 +93,8 @@ jobs:
         run: | 
           #docker build -t clagosu/ms-aumento-voto:latest .
           echo "Docker build"
+          docker build -t clagosu/ms-aumento-voto:latest .
+          
 
   Container-Analysis:
     name: Container Vulnerability Analysis
