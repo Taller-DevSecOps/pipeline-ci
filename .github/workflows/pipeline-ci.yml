@@ -21,10 +21,14 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
-
+      
       - name: Build
         run: |
           mvn clean compile
+          
+      - name: Dependency Tree
+        run: |
+          mvn dependency:tree
   SAST:
     runs-on: ubuntu-latest
     name: Static Application Security Testing
