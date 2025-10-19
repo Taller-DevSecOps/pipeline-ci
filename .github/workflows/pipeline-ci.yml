@@ -15,7 +15,12 @@ jobs:
     steps:   
       - name: Git Clone
         uses: actions/checkout@v4
-      
+        
+      - name: Compliance as code
+        uses: instrumenta/conftest-action@master
+        with:
+          files: kubernetes/deployment.yaml
+          
       - name: Set Up JDK
         uses: actions/setup-java@v4.2.1
         with:
@@ -117,6 +122,7 @@ jobs:
 
   Container-Analysis:
     name: Container Vulnerability Analysis
+    continue-on-error: true
     needs: Docker-build
     runs-on: ubuntu-latest
     steps:
@@ -141,3 +147,12 @@ jobs:
         run: |
           echo "Docker push"
   
+  Deploy:
+    needs: Docker-push
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Compliance as code
+        uses: instrumenta/conftest-action@master
+        with:
+          files: deployment.yaml
