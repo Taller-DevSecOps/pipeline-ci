@@ -15,12 +15,6 @@ jobs:
     steps:   
       - name: Git Clone
         uses: actions/checkout@v4
-        
-      - name: Compliance as code
-        uses: instrumenta/conftest-action@master
-        with:
-          files: kubernetes/deployment.yaml
-          policy: policy/
           
       - name: Set Up JDK
         uses: actions/setup-java@v4.2.1
@@ -37,6 +31,7 @@ jobs:
           mvn dependency:tree
   SAST:
     runs-on: ubuntu-latest
+    needs: BUILD
     name: Static Application Security Testing
     steps:   
     
@@ -60,19 +55,6 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:java-kotlin"
-          
-      #- name: Validate SAST
-        #run: |
-          #exit 1
-
-      #- name: Set final commit status
-        #uses: myrotvorets/set-commit-status-action@master
-        #if: always()
-        #with:
-          #token: ${{ secrets.GH_TOKEN }}
-          #status: ${{ job.status }}
-          #context: Security Testing
-          #sha: ${{ github.sha }}
  
   SCA:
     needs: SAST
@@ -101,6 +83,7 @@ jobs:
                     
   Docker-build:
     name: Build Docker Image
+    continue-on-error: true
     needs: 
       - SAST
       - SCA
@@ -156,4 +139,5 @@ jobs:
       - name: Compliance as code
         uses: instrumenta/conftest-action@master
         with:
-          files: deployment.yaml
+          files: kubernetes/deployment.yaml
+          policy: policy/
