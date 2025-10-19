@@ -20,6 +20,7 @@ jobs:
         uses: instrumenta/conftest-action@master
         with:
           files: kubernetes/deployment.yaml
+          policy: policy/
           
       - name: Set Up JDK
         uses: actions/setup-java@v4.2.1
