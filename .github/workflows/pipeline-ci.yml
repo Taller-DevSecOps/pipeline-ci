@@ -135,7 +135,9 @@ jobs:
     needs: Docker-push
     runs-on: ubuntu-latest
     steps:
-      
+      - name: Git Clone
+        uses: actions/checkout@v4
+        
       - name: Compliance as code
         uses: instrumenta/conftest-action@master
         with:
